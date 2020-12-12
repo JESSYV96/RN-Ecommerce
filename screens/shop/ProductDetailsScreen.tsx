@@ -26,14 +26,13 @@ const ProductDetailsScreen = ({ navigation }: Props) => {
                 style={styles.image}
                 source={{ uri: product?.imageUrl }} />
             <View style={styles.action}>
-              <Button
-                color={Platform.OS === 'android'
-                    ? Colors.primaryLight
-                    : Colors.primary}
-                onPress={() => { }}
-                title="Ajouter au panier" />  
+                <Button
+                    color={Platform.OS === 'android'
+                        ? Colors.primaryLight
+                        : Colors.primary}
+                    onPress={() => { }}
+                    title="Ajouter au panier" />
             </View>
-            
             <Text style={styles.price}>{product?.price} €</Text>
             <Text style={styles.description}>{product?.description}</Text>
         </ScrollView>
@@ -54,17 +53,20 @@ const styles = StyleSheet.create({
         height: Dimensions.get('window').height / 3
     },
     action: {
-        marginVertical: 10,
+        marginTop: 20,
+        marginBottom: 5,
         alignItems: 'center'
     },
     price: {
         fontSize: 20,
+        fontFamily: 'openSansBold',
         color: '#888',
         textAlign: 'center',
         marginVertical: 15
 
     },
     description: {
+        fontFamily: 'openSans',
         fontSize: 15,
         textAlign: 'center',
         marginHorizontal: 17
