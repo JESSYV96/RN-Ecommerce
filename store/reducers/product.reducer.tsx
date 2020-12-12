@@ -9,3 +9,6 @@ const initialState: ProductState = {
 export const productListReducer = (state = initialState, action: ProductListAction) => {
     return state
 }
+
+
+
