@@ -1,3 +1,4 @@
 export const Colors: any = {
-    primary: '#192a51'
+    primary: '#81698c',
+    primaryLight: '#9F8BA7'
 }
