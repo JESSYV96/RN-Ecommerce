@@ -4,9 +4,10 @@ import { Provider } from 'react-redux'
 import { Store, createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from "redux-thunk"
 import * as Font from 'expo-font';
-import { composeWithDevTools } from 'redux-devtools-extension';
 
 import { productListReducer } from './store/reducers/product.reducer'
+import { cartReducer } from './store/reducers/cart.reducer'
+
 import ShopNavigator from "./navigation/ShopNavigator";
 
 export default function App() {
@@ -21,10 +22,11 @@ export default function App() {
   }
 
   const mainReducer = combineReducers({
-    productList: productListReducer
+    productList: productListReducer,
+    cart: cartReducer
   })
 
-  const store: Store = createStore(mainReducer, composeWithDevTools())
+  const store: Store = createStore(mainReducer, applyMiddleware(thunk))
 
 
   return (

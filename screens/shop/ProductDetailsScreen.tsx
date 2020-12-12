@@ -10,13 +10,14 @@ import {
     View
 } from 'react-native'
 import { Props } from '../../types/Props.d'
-import { RootStateOrAny, useSelector } from 'react-redux'
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import Product from '../../models/Product'
 import { Colors } from '../../constants/Colors'
+import { addToCart } from '../../store/actions/cart.actions'
 
 const ProductDetailsScreen = ({ navigation }: Props) => {
+    const dispatch = useDispatch()
     const productId: string = navigation.getParam('id')
-    const productTitle: string = navigation.getParam('title')
     const productList: Product[] = useSelector((state: RootStateOrAny) => state.productList.availableProduct)
     const product: Product | undefined = productList.find((p: Product) => p.id === productId)
 
@@ -30,7 +31,7 @@ const ProductDetailsScreen = ({ navigation }: Props) => {
                     color={Platform.OS === 'android'
                         ? Colors.primaryLight
                         : Colors.primary}
-                    onPress={() => { }}
+                    onPress={() => dispatch(addToCart(product))}
                     title="Ajouter au panier" />
             </View>
             <Text style={styles.price}>{product?.price} €</Text>
