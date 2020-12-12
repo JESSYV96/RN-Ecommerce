@@ -1,6 +1,6 @@
-interface Product {
-    id: number,
-    ownerId: number,
+export default interface Product {
+    id: string,
+    ownerId: string,
     title: string,
     imageUrl: string,
     description: string,
