@@ -1,11 +1,13 @@
 import React from 'react'
 import { Button, Platform, StyleSheet, Text, View, FlatList } from 'react-native'
-import { RootStateOrAny, useSelector } from 'react-redux'
+import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import CartItem from '../../components/shop/CartItem'
 import { Colors } from '../../constants/Colors'
 import ICartItem from '../../models/CartItem'
+import { removeFromCart } from '../../store/actions/cart.actions'
 
 const CartScreen = () => {
+    const dispatch = useDispatch()
     const cart = useSelector((state: RootStateOrAny) => state.cart)
     const { cartItems, totalAmount } = cart
     const arrCartItems: ICartItem[] = []
@@ -18,6 +20,7 @@ const CartScreen = () => {
             sum: cartItems[key].sum
         })
     }
+    arrCartItems.sort((a, b) => (a !== undefined && b !== undefined) && (a.id > b.id) ? 1 : -1)
 
     return (
         <View style={styles.screen}>
@@ -28,7 +31,7 @@ const CartScreen = () => {
                 <Button
                     onPress={() => { }}
                     color={Colors.secondary}
-                    disabled={cartItems.length === 0 || totalAmount <= 0}
+                    disabled={arrCartItems.length === 0}
                     title='Commander' />
             </View>
             <FlatList
@@ -38,7 +41,9 @@ const CartScreen = () => {
                         quantity={item.quantity}
                         title={item.title}
                         amount={item.sum}
-                        onRemove={() => {}}
+                        onRemove={() => {
+                            dispatch(removeFromCart(item.id))
+                        }}
                     />}
             />
         </View>

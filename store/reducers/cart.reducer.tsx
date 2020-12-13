@@ -1,7 +1,7 @@
 import Product from "../../models/Product";
-import { ADD_TO_CART } from "../constants/cart.constants";
+import { ADD_TO_CART, REMOVE_TO_CART } from "../constants/cart.constants";
 import { CartItemAction, CartItemState } from "../../types/cart.d"
-import CartItem from '../../models/CartItem'
+import ICartItem from '../../models/CartItem'
 import { calculPrice } from "../../utils/calculPrice";
 
 const initialState: CartItemState = {
@@ -12,12 +12,12 @@ const initialState: CartItemState = {
 export const cartReducer = (state = initialState, action: CartItemAction) => {
     switch (action.type) {
         case ADD_TO_CART:
-            const addedProduct: Product = action.payload
+            const addedProduct: Product = action.product
             const price: number = addedProduct.price
             const title: string = addedProduct.title
 
             if (addedProduct.id in state.cartItems) {
-                const updItem: CartItem = {
+                const updItem: ICartItem = {
                     title: title,
                     quantity: state.cartItems[addedProduct.id].quantity + 1,
                     price: price,
@@ -29,7 +29,7 @@ export const cartReducer = (state = initialState, action: CartItemAction) => {
                     totalAmount: state.totalAmount + price
                 }
             } else {
-                const newItem: CartItem = {
+                const newItem: ICartItem = {
                     title: title,
                     quantity: 1,
                     price: price,
@@ -42,9 +42,37 @@ export const cartReducer = (state = initialState, action: CartItemAction) => {
                     totalAmount: state.totalAmount + price
                 }
             }
+        case REMOVE_TO_CART:
+            const item: ICartItem = state.cartItems[action.productId]
+            const qty: number = item.quantity
+            let updCartItems
+            if (qty > 1) {
+                const updCartItem = {
+                    title: item.title,
+                    quantity: item.quantity - 1,
+                    price: item.price,
+                    sum: item.sum - item.price
+                }
 
+                updCartItems = { ...state.cartItems, [action.productId]: updCartItem }
+
+                return {
+                    ...state,
+                    cartItems: updCartItems,
+                    totalAmount: state.totalAmount - item.price
+                }
+            } else {
+                updCartItems = { ...state.cartItems } // => make a copy current array
+                delete updCartItems[action.productId]
+                return {
+                    ...state,
+                    cartItems: updCartItems,
+                    totalAmount: state.totalAmount - item.price
+                }
+            }
+            return state
         default:
-            break;
+            return state
     }
-    return state
+
 }
