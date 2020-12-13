@@ -1,13 +1,24 @@
 import React from 'react'
-import { Button, StyleSheet, Text, View } from 'react-native'
+import { Button, Platform, StyleSheet, Text, View, FlatList } from 'react-native'
 import { RootStateOrAny, useSelector } from 'react-redux'
+import CartItem from '../../components/shop/CartItem'
 import { Colors } from '../../constants/Colors'
-
+import ICartItem from '../../models/CartItem'
 
 const CartScreen = () => {
     const cart = useSelector((state: RootStateOrAny) => state.cart)
     const { cartItems, totalAmount } = cart
-    console.log(cartItems);
+    const arrCartItems: ICartItem[] = []
+    for (const key in cartItems) {
+        arrCartItems.push({
+            id: key,
+            title: cartItems[key].title,
+            quantity: cartItems[key].quantity,
+            price: cartItems[key].price,
+            sum: cartItems[key].sum
+        })
+    }
+
     return (
         <View style={styles.screen}>
             <View style={styles.summary}>
@@ -16,9 +27,20 @@ const CartScreen = () => {
                 </Text>
                 <Button
                     onPress={() => { }}
-                    disabled={cartItems.length === 0 || totalAmount >= 0}
+                    color={Colors.secondary}
+                    disabled={cartItems.length === 0 || totalAmount <= 0}
                     title='Commander' />
             </View>
+            <FlatList
+                data={arrCartItems}
+                renderItem={({ item }) =>
+                    <CartItem
+                        quantity={item.quantity}
+                        title={item.title}
+                        amount={item.sum}
+                        onRemove={() => {}}
+                    />}
+            />
         </View>
     )
 }

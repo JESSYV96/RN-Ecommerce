@@ -1,5 +1,5 @@
-export default interface CartItem 
-{
+export default interface ICartItem {
+    id: string,
     title: string,
     quantity: number,
     price: number,
