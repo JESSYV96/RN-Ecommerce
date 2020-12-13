@@ -1,5 +1,5 @@
 import { NavigationStackProp } from 'react-navigation-stack';
 
-export type Props = {
+export interface PropsNavigation {
     navigation: NavigationStackProp
 }

@@ -1,5 +1,5 @@
 import PRODUCTS from '../../data/dummy-data'
-import { ProductListAction, ProductState } from '../types/product.types'
+import { ProductListAction, ProductState } from '../../types/product.d'
 
 const initialState: ProductState = {
     availableProduct: PRODUCTS,

@@ -1,11 +1,13 @@
 import React from 'react'
-import { StyleSheet, FlatList } from 'react-native'
+import { StyleSheet, FlatList, Platform } from 'react-native'
 import { useSelector, RootStateOrAny, useDispatch } from 'react-redux'
+import { HeaderButtons, Item } from 'react-navigation-header-buttons'
+import CustomHeaderButton from '../../components/UI/HeaderButton'
 import ProductItem from '../../components/shop/ProductItem'
 import { addToCart } from '../../store/actions/cart.actions'
-import { Props } from '../../types/Props.d'
+import { PropsNavigation } from '../../types/Props.d'
 
-const ProductOverviewScreen = ({ navigation }: Props) => {
+const ProductOverviewScreen = ({ navigation }: PropsNavigation) => {
     const dispatch = useDispatch()
     const productList = useSelector((state: RootStateOrAny) => state.productList.availableProduct)
     return <FlatList
@@ -19,13 +21,22 @@ const ProductOverviewScreen = ({ navigation }: Props) => {
                     title: itemData.item.title
                 })
             }}
-            onAddToCart={() => dispatch(addToCart(itemData.item)) }
+            onAddToCart={() => dispatch(addToCart(itemData.item))}
         />}
         data={productList} />
 }
 
-ProductOverviewScreen.navigationOptions = {
-    title: 'Tout nos produits'
+ProductOverviewScreen.navigationOptions = (navData: any) => {
+    return {
+        title: 'Produits',
+        headerRight: () =>
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                <Item
+                    title='cart'
+                    iconName={Platform.OS === "android" ? 'md-cart' : 'ios-cart'}
+                    onPress={() => navData.navigation.navigate('Cart')} />
+            </HeaderButtons>
+    }
 }
 
 export default ProductOverviewScreen

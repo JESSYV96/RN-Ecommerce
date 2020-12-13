@@ -1,5 +1,5 @@
 import { exp } from 'react-native-reanimated'
-import Product from '../../models/Product'
+import Product from '../models/Product'
 
 const PRODUCT_LIST = 'PRODUCT_LIST'
 

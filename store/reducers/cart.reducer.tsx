@@ -1,6 +1,6 @@
 import Product from "../../models/Product";
 import { ADD_TO_CART } from "../constants/cart.constants";
-import { CartItemAction, CartItemState } from "../types/cart.d"
+import { CartItemAction, CartItemState } from "../../types/cart.d"
 import CartItem from '../../models/CartItem'
 import { calculPrice } from "../../utils/calculPrice";
 
@@ -25,7 +25,8 @@ export const cartReducer = (state = initialState, action: CartItemAction) => {
                 }
                 return {
                     ...state,
-                    cartItems: { ...state.cartItems, [addedProduct.id]: updItem }
+                    cartItems: { ...state.cartItems, [addedProduct.id]: updItem },
+                    totalAmount: state.totalAmount + price
                 }
             } else {
                 const newItem: CartItem = {

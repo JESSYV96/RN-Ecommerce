@@ -9,13 +9,13 @@ import {
     Platform,
     View
 } from 'react-native'
-import { Props } from '../../types/Props.d'
+import { PropsNavigation } from '../../types/Props.d'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import Product from '../../models/Product'
 import { Colors } from '../../constants/Colors'
 import { addToCart } from '../../store/actions/cart.actions'
 
-const ProductDetailsScreen = ({ navigation }: Props) => {
+const ProductDetailsScreen = ({ navigation }: PropsNavigation) => {
     const dispatch = useDispatch()
     const productId: string = navigation.getParam('id')
     const productList: Product[] = useSelector((state: RootStateOrAny) => state.productList.availableProduct)
