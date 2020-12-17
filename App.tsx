@@ -25,7 +25,7 @@ export default function App() {
   const mainReducer = combineReducers({
     productList: productListReducer,
     cart: cartReducer,
-    order: orderReducer
+    orders: orderReducer
   })
 
   const store: Store = createStore(mainReducer, applyMiddleware(thunk))

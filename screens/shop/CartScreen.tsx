@@ -30,7 +30,7 @@ const CartScreen = () => {
                 <Text style={styles.amount}> {totalAmount.toFixed(2)} €</Text>
                 </Text>
                 <Button
-                    onPress={dispatch(addOrder(cartItems, totalAmount))}
+                    onPress={() => dispatch(addOrder(cartItems, totalAmount))}
                     color={Colors.secondary}
                     disabled={arrCartItems.length === 0}
                     title='Commander' />

@@ -29,13 +29,20 @@ const ProductOverviewScreen = ({ navigation }: PropsNavigation) => {
 ProductOverviewScreen.navigationOptions = (navData: any) => {
     return {
         title: 'Produits',
-        headerRight: () =>
+        headerRight: () => (
             <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
                 <Item
                     title='cart'
                     iconName={Platform.OS === "android" ? 'md-cart' : 'ios-cart'}
                     onPress={() => navData.navigation.navigate('Cart')} />
-            </HeaderButtons>
+            </HeaderButtons>),
+        headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                <Item
+                    title='menu'
+                    iconName={Platform.OS === "android" ? 'md-menu' : 'ios-menu'}
+                    onPress={() => navData.navigation.toggleDrawer()}/>
+            </HeaderButtons>)
     }
 }
 
