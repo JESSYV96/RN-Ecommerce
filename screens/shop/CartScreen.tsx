@@ -5,6 +5,7 @@ import CartItem from '../../components/shop/CartItem'
 import { Colors } from '../../constants/Colors'
 import ICartItem from '../../models/CartItem'
 import { removeFromCart } from '../../store/actions/cart.actions'
+import { addOrder } from '../../store/actions/order.actions'
 
 const CartScreen = () => {
     const dispatch = useDispatch()
@@ -29,7 +30,7 @@ const CartScreen = () => {
                 <Text style={styles.amount}> {totalAmount.toFixed(2)} €</Text>
                 </Text>
                 <Button
-                    onPress={() => { }}
+                    onPress={dispatch(addOrder(cartItems, totalAmount))}
                     color={Colors.secondary}
                     disabled={arrCartItems.length === 0}
                     title='Commander' />

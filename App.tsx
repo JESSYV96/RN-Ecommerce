@@ -7,6 +7,7 @@ import * as Font from 'expo-font';
 
 import { productListReducer } from './store/reducers/product.reducer'
 import { cartReducer } from './store/reducers/cart.reducer'
+import { orderReducer } from './store/reducers/order.reducer'
 
 import ShopNavigator from "./navigation/ShopNavigator";
 
@@ -23,7 +24,8 @@ export default function App() {
 
   const mainReducer = combineReducers({
     productList: productListReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    order: orderReducer
   })
 
   const store: Store = createStore(mainReducer, applyMiddleware(thunk))

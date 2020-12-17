@@ -70,7 +70,6 @@ export const cartReducer = (state = initialState, action: CartItemAction) => {
                     totalAmount: state.totalAmount - item.price
                 }
             }
-            return state
         default:
             return state
     }
