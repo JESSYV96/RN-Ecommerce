@@ -1,4 +1,5 @@
 import React from 'react'
+import { Alert } from 'react-native'
 import { Button, FlatList, Platform, View, StyleSheet, Dimensions } from 'react-native'
 import { Colors } from 'react-native/Libraries/NewAppScreen'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
@@ -15,6 +16,12 @@ const UserProductScreen = ({ navigation }) => {
             productId: id,
         })
     }
+    const deleteHandler = (id) => {
+        Alert.alert('Supprimer', 'Êtes-vous sur vouloir supprimer ce produit ?', [
+            { text: 'Non', style: 'default' },
+            { text: 'Oui', style: 'destructive', onPress: () => dispatch(deleteProduct(id)) }
+        ])
+    }
     return (
         <FlatList
             data={userProducts}
@@ -29,7 +36,7 @@ const UserProductScreen = ({ navigation }) => {
                         : Colors.primary} title='Editer' onPress={() => editProductHandler(itemData.item.id)} />
                     <Button color={Platform.OS === 'android'
                         ? Colors.primaryLight
-                        : Colors.primary} title='Supprimer' onPress={() => dispatch(deleteProduct(itemData.item.id))} />
+                        : Colors.primary} title='Supprimer' onPress={() => deleteHandler(itemData.item.id)} />
                 </View>
             </ProductItem>
             }

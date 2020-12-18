@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useState } from 'react'
-import { Platform, StyleSheet, Text, View, ScrollView, TextInput } from 'react-native'
+import { Platform, StyleSheet, Text, View, ScrollView, TextInput, Alert } from 'react-native'
 import { HeaderButtons, Item } from 'react-navigation-header-buttons'
 import { RootStateOrAny, useDispatch, useSelector } from 'react-redux'
 import CustomHeaderButton from '../../components/UI/HeaderButton'
@@ -23,7 +23,7 @@ const EditProductScreen = ({ navigation }) => {
         } else {
             dispatch(createProduct(title, image, parseFloat(price), description))
         }
-        navigation.navigate('UserProducts')
+        navigation.goBack()
     }, [dispatch, pId, title, image, price, description])
 
     useEffect(() => {
@@ -38,13 +38,16 @@ const EditProductScreen = ({ navigation }) => {
                     <TextInput
                         style={styles.input}
                         value={title}
-                        onChangeText={text => setTitle(text)} />
+                        onChangeText={text => setTitle(text)}
+                        keyboardType="default"
+                        autoCapitalize='sentences'/>
                 </View>
                 <View style={styles.formControl}>
                     <Text style={styles.label}>Image</Text>
                     <TextInput
                         style={styles.input}
                         value={image}
+                        keyboardType="default"
                         onChangeText={image => setImage(image)} />
                 </View>
                 {product ? null :
@@ -53,6 +56,9 @@ const EditProductScreen = ({ navigation }) => {
                         <TextInput
                             style={styles.input}
                             value={price}
+                            keyboardType='decimal-pad' 
+                            returnKeyType='next'
+                            onEndEditing={()=> console.log('end')}
                             onChangeText={price => setPrice(price)} />
                     </View>
                 }
@@ -62,6 +68,8 @@ const EditProductScreen = ({ navigation }) => {
                     <TextInput
                         style={styles.input}
                         value={description}
+                        keyboardType="default"
+                        autoCapitalize='sentences'
                         onChangeText={description => setDescription(description)} />
                 </View>
             </View>
