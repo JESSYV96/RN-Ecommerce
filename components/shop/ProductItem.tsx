@@ -11,16 +11,9 @@ import {
     TouchableNativeFeedback,
 } from 'react-native'
 import { Colors } from '../../constants/Colors'
+import { ProductItemType } from '../../types/product.d'
 
-type Props = {
-    image: string,
-    title: string,
-    price: number,
-    onViewDetails: any,
-    onAddToCart: any
-}
-
-const ProductItem = ({ image, title, price, onViewDetails, onAddToCart }: Props) => {
+const ProductItem = ({ image, title, price, children, onSelect }: ProductItemType) => {
     let TouchableComp: any = TouchableOpacity
 
     if (Platform.OS === 'android' && Platform.Version >= 21) {
@@ -31,7 +24,7 @@ const ProductItem = ({ image, title, price, onViewDetails, onAddToCart }: Props)
     return (
         <View style={styles.product}>
             <View style={styles.touchable}>
-                <TouchableComp onPress={onViewDetails}>
+                <TouchableComp onPress={onSelect}>
                     <View>
                         <View style={styles.imageContainer}>
                             <Image style={styles.image} source={{ uri: image }} />
@@ -40,14 +33,7 @@ const ProductItem = ({ image, title, price, onViewDetails, onAddToCart }: Props)
                             <Text style={styles.title}>{title}</Text>
                             <Text style={styles.price}>{price.toFixed(2)} €</Text>
                         </View>
-                        <View style={styles.actions}>
-                            <Button color={Platform.OS === 'android'
-                                ? Colors.primaryLight
-                                : Colors.primary} title='Détails' onPress={onViewDetails} />
-                            <Button color={Platform.OS === 'android'
-                                ? Colors.primaryLight
-                                : Colors.primary} title='Ajouter au panier' onPress={onAddToCart} />
-                        </View>
+                        {children}
                     </View>
                 </TouchableComp>
             </View>
@@ -100,12 +86,5 @@ const styles = StyleSheet.create({
         height: Platform.OS === 'ios'
             ? Dimensions.get('window').height / 15
             : Dimensions.get('window').height / 10,
-    },
-    actions: {
-        flexDirection: 'row',
-        justifyContent: 'space-around',
-        alignItems: 'center',
-        margin: 5,
-        height: Dimensions.get('window').height / 20,
-    },
+    }
 })

@@ -18,8 +18,8 @@ import { addToCart } from '../../store/actions/cart.actions'
 const ProductDetailsScreen = ({ navigation }: PropsNavigation) => {
     const dispatch = useDispatch()
     const productId: string = navigation.getParam('id')
-    const productList: Product[] = useSelector((state: RootStateOrAny) => state.productList.availableProduct)
-    const product: Product | undefined = productList.find((p: Product) => p.id === productId)
+    const productList: Product[] = useSelector((state: RootStateOrAny) => state.productList.availableProducts)
+    const product: Product = productList.find((p: Product) => p.id === productId)
 
     return (
         <ScrollView>

@@ -4,6 +4,7 @@ import { CartItemAction, CartItemState } from "../../types/cart.d"
 import ICartItem from '../../models/CartItem'
 import { calculPrice } from "../../utils/calculPrice";
 import { ADD_ORDER } from "../actions/order.actions";
+import { DELETE_PRODUCT } from "../actions/product.actions";
 
 const initialState: CartItemState = {
     cartItems: {},
@@ -73,6 +74,19 @@ export const cartReducer = (state = initialState, action: CartItemAction) => {
             }
         case ADD_ORDER:
             return initialState
+        case DELETE_PRODUCT:
+            if (!state.cartItems[action.productId]) {
+                return state
+            }
+            const updItems = { ...state.cartItems }
+            const itemSum = state.cartItems[action.productId].sum
+          
+            delete updItems[action.productId]
+            return {
+                ...state,
+                cartItems: updItems,
+                totalAmount: state.totalAmount - itemSum
+            }
         default:
             return state
     }
