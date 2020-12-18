@@ -16,5 +16,5 @@ export type CartItemType = {
     title: string,
     quantity: number,
     amount: number,
-    onRemove(): void
+    onRemove?(): void
 }

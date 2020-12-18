@@ -12,15 +12,18 @@ const CartItem = ({ quantity, title, amount, onRemove }: CartItemType) => {
             </View>
             <View style={styles.item}>
                 <Text style={styles.mainText}>{amount.toFixed(2)} €</Text>
-                <TouchableOpacity
-                    style={styles.deleteButton}
-                    onPress={onRemove}>
-                    <Ionicons
-                        size={23}
-                        color='red'
-                        name={Platform.OS === "android" ? 'md-trash' : 'ios-trash'}
-                    />
-                </TouchableOpacity>
+                {onRemove &&
+                    <TouchableOpacity
+                        style={styles.deleteButton}
+                        onPress={onRemove}>
+                        <Ionicons
+                            size={23}
+                            color='red'
+                            name={Platform.OS === "android" ? 'md-trash' : 'ios-trash'}
+                        />
+                    </TouchableOpacity>
+                }
+
             </View>
         </View>
     )
