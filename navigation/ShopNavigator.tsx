@@ -10,6 +10,7 @@ import { Colors } from '../constants/Colors'
 import { createDrawerNavigator } from "react-navigation-drawer";
 import { Ionicons } from "@expo/vector-icons";
 import UserProductScreen from '../screens/user/UserProductScreen';
+import EditProductScreen from '../screens/user/EditProductScreen';
 
 const defaultNavOptions = {
     headerStyle: {
@@ -56,7 +57,8 @@ const OrdersNavigation = createStackNavigator({
 })
 
 const AdminNavigation = createStackNavigator({
-    UserProduct: UserProductScreen
+    UserProduct: UserProductScreen,
+    EditProduct: EditProductScreen
 }, {
     navigationOptions: {
         drawerIcon: drawerConfig => (

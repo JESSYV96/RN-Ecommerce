@@ -10,6 +10,11 @@ import { deleteProduct } from '../../store/actions/product.actions'
 const UserProductScreen = ({ navigation }) => {
     const dispatch = useDispatch()
     const userProducts = useSelector((state: RootStateOrAny) => state.productList.userProducts)
+    const editProductHandler = (id: string): void => {
+        navigation.navigate('EditProduct', {
+            productId: id,
+        })
+    }
     return (
         <FlatList
             data={userProducts}
@@ -17,16 +22,11 @@ const UserProductScreen = ({ navigation }) => {
                 image={itemData.item.imageUrl}
                 title={itemData.item.title}
                 price={itemData.item.price}
-                onSelect={() => {
-                    navigation.navigate('ProductDetails', {
-                        id: itemData.item.id,
-                        title: itemData.item.title
-                    })
-                }}>
+                onSelect={() => editProductHandler(itemData.item.id)}>
                 <View style={styles.actions}>
                     <Button color={Platform.OS === 'android'
                         ? Colors.primaryLight
-                        : Colors.primary} title='Editer' onPress={() => { }} />
+                        : Colors.primary} title='Editer' onPress={() => editProductHandler(itemData.item.id)} />
                     <Button color={Platform.OS === 'android'
                         ? Colors.primaryLight
                         : Colors.primary} title='Supprimer' onPress={() => dispatch(deleteProduct(itemData.item.id))} />
@@ -46,7 +46,14 @@ UserProductScreen.navigationOptions = (navData: any) => {
                     title='menu'
                     iconName={Platform.OS === "android" ? 'md-menu' : 'ios-menu'}
                     onPress={() => navData.navigation.toggleDrawer()} />
-            </HeaderButtons>)
+            </HeaderButtons>),
+        headerRight: () => (
+            <HeaderButtons HeaderButtonComponent={CustomHeaderButton}>
+                <Item
+                    title='add'
+                    iconName={Platform.OS === "android" ? 'md-create' : 'ios-create'}
+                    onPress={() => navData.navigation.navigate('EditProduct')} />
+            </HeaderButtons>),
     }
 }
 
